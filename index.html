@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Monetization System Map — Martell Group</title>
+  <title>Monetization System Map — Q1 2026 — Martell Group</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -11,436 +11,680 @@
       color: #e5e5e5;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
       line-height: 1.6;
-      overflow-x: hidden;
     }
     .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
     
-    /* Header */
     header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
       border-bottom: 1px solid #1a1a2e;
       padding-bottom: 20px;
       margin-bottom: 30px;
     }
-    header h1 { font-size: 28px; font-weight: 600; margin-bottom: 8px; }
+    header h1 { font-size: 28px; font-weight: 600; margin-bottom: 4px; }
     header .subtitle { color: #888; font-size: 14px; }
+    .period-badge {
+      background: #1a1a2e;
+      border: 1px solid #2a2a40;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #48c78e;
+      white-space: nowrap;
+    }
     
-    /* Executive Summary */
+    /* Exec Summary */
     .exec-summary {
-      background: linear-gradient(135deg, #1a1a2e 0%, #12121a 100%);
+      background: linear-gradient(135deg, #1a1a2e, #12121a);
       border: 1px solid #2a2a40;
       border-radius: 12px;
       padding: 24px;
       margin-bottom: 30px;
     }
-    .exec-summary h2 { font-size: 18px; margin-bottom: 16px; color: #48c78e; }
-    .metrics-grid {
+    .exec-summary h2 { font-size: 16px; margin-bottom: 16px; color: #48c78e; text-transform: uppercase; letter-spacing: 1px; }
+    .metrics-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
       margin-bottom: 20px;
     }
-    .metric-card {
+    .kpi {
       background: #0f0f14;
       padding: 16px;
       border-radius: 8px;
       border-left: 3px solid;
+      position: relative;
     }
-    .metric-card.green { border-color: #48c78e; }
-    .metric-card.yellow { border-color: #f7b731; }
-    .metric-card.red { border-color: #eb3b5a; }
-    .metric-card .label { font-size: 12px; color: #888; text-transform: uppercase; }
-    .metric-card .value { font-size: 24px; font-weight: 600; margin: 4px 0; }
-    .metric-card .sub { font-size: 13px; color: #aaa; }
+    .kpi.g { border-color: #48c78e; }
+    .kpi.y { border-color: #f7b731; }
+    .kpi.r { border-color: #eb3b5a; }
+    .kpi .label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+    .kpi .val { font-size: 26px; font-weight: 700; margin: 4px 0; }
+    .kpi .sub { font-size: 12px; color: #999; }
+    .kpi .trend { font-size: 11px; margin-top: 4px; }
+    .kpi .trend.up { color: #48c78e; }
+    .kpi .trend.down { color: #eb3b5a; }
+    .kpi .trend.flat { color: #f7b731; }
     
-    .problem-alert {
-      background: rgba(235, 59, 90, 0.1);
-      border: 1px solid #eb3b5a;
+    .top-problem {
+      background: rgba(235, 59, 90, 0.08);
+      border: 1px solid rgba(235, 59, 90, 0.3);
       border-radius: 8px;
-      padding: 16px;
+      padding: 14px 18px;
+      font-size: 14px;
       color: #ffcdd2;
     }
-    .problem-alert strong { color: #eb3b5a; }
+    .top-problem strong { color: #eb3b5a; }
     
-    /* Journey Flow */
+    /* Journey */
     .journey { margin: 40px 0; }
-    .journey h2 { font-size: 20px; margin-bottom: 24px; }
-    .stages {
-      display: flex;
-      gap: 16px;
-      overflow-x: auto;
-      padding-bottom: 20px;
+    .journey > h2 { font-size: 18px; margin-bottom: 20px; }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      position: relative;
+    }
+    .flow::before {
+      content: '';
+      position: absolute;
+      top: 48px;
+      left: 60px;
+      right: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, #48c78e, #f7b731 40%, #eb3b5a 60%, #f7b731 80%, #eb3b5a);
+      z-index: 0;
     }
     .stage {
-      min-width: 280px;
       background: #12121a;
       border: 1px solid #2a2a40;
       border-radius: 12px;
-      padding: 20px;
+      padding: 16px;
       cursor: pointer;
       transition: all 0.3s;
       position: relative;
+      z-index: 1;
     }
     .stage:hover {
       transform: translateY(-4px);
-      border-color: #48c78e;
-      box-shadow: 0 8px 24px rgba(72, 199, 142, 0.15);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     }
-    .stage.expanded {
-      min-width: 400px;
-      background: #1a1a2e;
-    }
-    .stage-number {
-      width: 32px;
-      height: 32px;
-      background: #48c78e;
+    .stage.active { border-color: #48c78e; background: #151520; }
+    .stage.has-problem { border-color: #eb3b5a; }
+    .stage-num {
+      width: 28px; height: 28px;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      color: #0a0a0f;
-      margin-bottom: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 13px;
+      margin-bottom: 10px;
     }
-    .stage h3 { font-size: 16px; margin-bottom: 6px; }
-    .stage .subtitle { font-size: 13px; color: #888; margin-bottom: 12px; }
-    .stage-metric {
-      background: rgba(72, 199, 142, 0.1);
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 14px;
-      margin-bottom: 8px;
+    .stage-num.g { background: #48c78e; color: #0a0a0f; }
+    .stage-num.y { background: #f7b731; color: #0a0a0f; }
+    .stage-num.r { background: #eb3b5a; color: #fff; }
+    .stage h3 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .stage .st-sub { font-size: 11px; color: #888; margin-bottom: 10px; }
+    .stage .st-metric {
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      margin-bottom: 4px;
     }
-    .stage-metric.red { background: rgba(235, 59, 90, 0.1); color: #ffcdd2; }
-    .stage-metric.yellow { background: rgba(247, 183, 49, 0.1); color: #ffe4a3; }
-    .stage-details {
-      display: none;
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid #2a2a40;
-      font-size: 13px;
-      color: #aaa;
-    }
-    .stage.expanded .stage-details { display: block; }
-    .stage-details ul { list-style: none; padding: 0; }
-    .stage-details li { padding: 6px 0; padding-left: 16px; position: relative; }
-    .stage-details li:before {
-      content: "→";
-      position: absolute;
-      left: 0;
-      color: #48c78e;
-    }
+    .st-metric.bg-g { background: rgba(72,199,142,0.1); color: #7ddfb8; }
+    .st-metric.bg-y { background: rgba(247,183,49,0.1); color: #ffe4a3; }
+    .st-metric.bg-r { background: rgba(235,59,90,0.1); color: #ffb3c1; }
     
-    /* Channel Performance */
-    .channels { margin: 40px 0; }
-    .channels h2 { font-size: 20px; margin-bottom: 20px; }
-    .channel-bar {
+    /* Expanded detail panel */
+    .detail-panel {
+      display: none;
       background: #12121a;
       border: 1px solid #2a2a40;
-      border-radius: 8px;
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 16px;
+      grid-column: 1 / -1;
+      animation: fadeIn 0.3s ease;
+    }
+    .detail-panel.show { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+    .detail-panel h4 { font-size: 16px; margin-bottom: 12px; }
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+    }
+    .detail-section h5 { font-size: 13px; color: #48c78e; text-transform: uppercase; margin-bottom: 8px; }
+    .detail-section ul { list-style: none; }
+    .detail-section li {
+      font-size: 13px;
+      color: #bbb;
+      padding: 4px 0 4px 16px;
+      position: relative;
+    }
+    .detail-section li::before { content: "→"; position: absolute; left: 0; color: #555; }
+    
+    /* Channels */
+    .channels { margin: 40px 0; }
+    .channels > h2 { font-size: 18px; margin-bottom: 6px; }
+    .channels > p { font-size: 13px; color: #888; margin-bottom: 16px; }
+    .ch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 12px;
+    }
+    .ch-card {
+      background: #12121a;
+      border: 1px solid #2a2a40;
+      border-radius: 10px;
       padding: 16px;
-      margin-bottom: 12px;
       position: relative;
       overflow: hidden;
     }
-    .channel-bar .fill {
-      position: absolute;
-      left: 0;
-      top: 0;
-      height: 100%;
-      opacity: 0.1;
-      transition: width 0.8s ease;
+    .ch-card .bg-fill {
+      position: absolute; left: 0; top: 0; height: 100%;
+      opacity: 0.06;
+      transition: width 1s ease;
     }
-    .channel-bar.green .fill { background: #48c78e; }
-    .channel-bar.yellow .fill { background: #f7b731; }
-    .channel-bar.red .fill { background: #eb3b5a; }
-    .channel-bar .content {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .ch-card.g .bg-fill { background: #48c78e; }
+    .ch-card.y .bg-fill { background: #f7b731; }
+    .ch-card.r .bg-fill { background: #eb3b5a; }
+    .ch-card .ch-content { position: relative; z-index: 1; }
+    .ch-card .ch-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .ch-card .ch-q1 { font-size: 22px; font-weight: 700; }
+    .ch-card .ch-q1.g { color: #48c78e; }
+    .ch-card .ch-q1.y { color: #f7b731; }
+    .ch-card .ch-q1.r { color: #eb3b5a; }
+    .ch-card .ch-trend { font-size: 12px; color: #999; margin-top: 4px; }
+    .ch-card .ch-months {
+      display: flex; gap: 8px; margin-top: 10px;
+      font-size: 11px; color: #777;
     }
-    .channel-bar .name { font-weight: 600; font-size: 15px; }
-    .channel-bar .stats { font-size: 13px; color: #aaa; }
+    .ch-card .ch-months span { flex: 1; background: #0f0f14; padding: 6px 8px; border-radius: 4px; text-align: center; }
+    .ch-card .ch-corr { font-size: 11px; color: #888; margin-top: 8px; }
     
-    /* Problems Section */
+    /* Problems */
     .problems { margin: 40px 0; }
-    .problems h2 { font-size: 20px; margin-bottom: 20px; color: #eb3b5a; }
-    .problem-card {
-      background: rgba(235, 59, 90, 0.05);
+    .problems > h2 { font-size: 18px; margin-bottom: 16px; color: #eb3b5a; }
+    .prob {
+      background: rgba(235,59,90,0.04);
       border-left: 3px solid #eb3b5a;
-      padding: 16px;
-      border-radius: 8px;
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
       margin-bottom: 12px;
     }
-    .problem-card h4 { font-size: 15px; margin-bottom: 8px; color: #eb3b5a; }
-    .problem-card p { font-size: 13px; color: #ccc; line-height: 1.6; }
-    .problem-card .fix { 
+    .prob h4 { font-size: 14px; color: #eb3b5a; margin-bottom: 6px; }
+    .prob p { font-size: 13px; color: #ccc; }
+    .prob .fix {
       margin-top: 8px;
-      padding-top: 8px;
-      border-top: 1px solid rgba(235, 59, 90, 0.2);
       font-size: 12px;
       color: #48c78e;
+      padding-top: 8px;
+      border-top: 1px solid rgba(235,59,90,0.15);
     }
     
-    /* Footer */
     footer {
       margin-top: 60px;
-      padding-top: 20px;
+      padding: 20px 0;
       border-top: 1px solid #1a1a2e;
       text-align: center;
       font-size: 12px;
       color: #555;
     }
+    footer a { color: #48c78e; text-decoration: none; }
     
-    @media (max-width: 768px) {
-      .stages { flex-direction: column; }
-      .stage { min-width: 100%; }
-      .metrics-grid { grid-template-columns: 1fr; }
+    @media (max-width: 900px) {
+      .flow { grid-template-columns: repeat(2, 1fr); }
+      .flow::before { display: none; }
+    }
+    @media (max-width: 600px) {
+      .flow { grid-template-columns: 1fr; }
+      .metrics-row { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
+<div class="container">
+  
+  <header>
+    <div>
       <h1>Monetization System Map</h1>
-      <p class="subtitle">Martell Group — Complete Stranger to Client Journey · Live Metrics Mar 19, 2026</p>
-    </header>
-    
-    <section class="exec-summary">
-      <h2>Executive Summary</h2>
-      <div class="metrics-grid">
-        <div class="metric-card yellow">
-          <div class="label">Revenue MTD</div>
-          <div class="value">$1.14M</div>
-          <div class="sub">of $2M target (57%)</div>
-        </div>
-        <div class="metric-card red">
-          <div class="label">Close Rate</div>
-          <div class="value">0.32%</div>
-          <div class="sub">target 1.0% | -$1.25M/mo lost</div>
-        </div>
-        <div class="metric-card yellow">
-          <div class="label">Followers</div>
-          <div class="value">10.0M</div>
-          <div class="sub">+294K MTD (58% of target)</div>
-        </div>
+      <p class="subtitle">Martell Group — Stranger → Client Journey</p>
+    </div>
+    <div class="period-badge">● Q1 2026 (Jan–Mar)</div>
+  </header>
+  
+  <!-- EXECUTIVE SUMMARY -->
+  <section class="exec-summary">
+    <h2>Q1 Scorecard</h2>
+    <div class="metrics-row">
+      <div class="kpi y">
+        <div class="label">Q1 Revenue</div>
+        <div class="val">$5.1M</div>
+        <div class="sub">of $6M target (85%)</div>
+        <div class="trend flat">Jan $2.2M → Feb $1.6M → Mar ~$1.9M proj</div>
       </div>
-      <div class="problem-alert">
-        <strong>🔴 #1 Problem:</strong> Close rate stuck at 0.32% vs 1.0% target. Every 0.1% improvement = $125K/month. Root cause: qualification broken or closers underperforming.
+      <div class="kpi r">
+        <div class="label">Close Rate</div>
+        <div class="val">0.32%</div>
+        <div class="sub">target 1.0% | $1.25M/mo lost</div>
+        <div class="trend down">↓ Jan 0.87% → Feb 0.76% → Mar 0.32%</div>
       </div>
-    </section>
-    
-    <section class="journey">
-      <h2>The Journey: Stranger → Client</h2>
-      <div class="stages" id="stages">
-        <div class="stage" data-stage="1">
-          <div class="stage-number">1</div>
-          <h3>ATTENTION</h3>
-          <p class="subtitle">Stranger → Follower</p>
-          <div class="stage-metric">10.0M followers</div>
-          <div class="stage-metric yellow">+294K MTD / 503K target</div>
-          <div class="stage-details">
-            <strong>How It Works:</strong>
+      <div class="kpi y">
+        <div class="label">Q1 Follower Growth</div>
+        <div class="val">+938K</div>
+        <div class="sub">10M total across all platforms</div>
+        <div class="trend up">↑ Mar recovering: +294K MTD</div>
+      </div>
+      <div class="kpi r">
+        <div class="label">Avg Deal Size</div>
+        <div class="val">$5,979</div>
+        <div class="sub">was $7K in Jan (-15%)</div>
+        <div class="trend down">↓ Sustained erosion all quarter</div>
+      </div>
+      <div class="kpi y">
+        <div class="label">New Clients Q1</div>
+        <div class="val">~710</div>
+        <div class="sub">183 MTD Mar + Jan/Feb</div>
+        <div class="trend flat">Renewals: 90 MTD in March</div>
+      </div>
+      <div class="kpi r">
+        <div class="label">Channel Health</div>
+        <div class="val">2 of 4</div>
+        <div class="sub">SMS/Web & Email collapsing</div>
+        <div class="trend down">↓ SMS -81%, Email -57% from Jan</div>
+      </div>
+    </div>
+    <div class="top-problem">
+      <strong>🔴 #1 Problem This Quarter:</strong> Close rate cratered from 0.87% (Jan) → 0.32% (Mar). Combined with deal size erosion ($7K→$6K), revenue is double-compressed. Each 0.1% close rate improvement = $125K/month. Fix this and everything else recovers.
+    </div>
+  </section>
+  
+  <!-- JOURNEY -->
+  <section class="journey">
+    <h2>The Journey: Stranger → Client</h2>
+    <p style="font-size:13px;color:#888;margin-bottom:20px;">Click any stage to see process details, team, SLAs, and bottlenecks.</p>
+    <div class="flow" id="flow">
+      
+      <div class="stage" onclick="toggleDetail(1)">
+        <div class="stage-num g">1</div>
+        <h3>ATTENTION</h3>
+        <p class="st-sub">Stranger → Follower</p>
+        <div class="st-metric bg-g">10.0M total followers</div>
+        <div class="st-metric bg-y">Q1: +938K growth</div>
+        <div class="st-metric bg-g">8 platforms active</div>
+      </div>
+      
+      <div class="stage" onclick="toggleDetail(2)">
+        <div class="stage-num y">2</div>
+        <h3>CAPTURE</h3>
+        <p class="st-sub">Follower → Lead</p>
+        <div class="st-metric bg-y">30.8K chats/mo (Mar)</div>
+        <div class="st-metric bg-g">4 CTA keywords active</div>
+        <div class="st-metric bg-y">Revvio: 1-2min auto-reply</div>
+      </div>
+      
+      <div class="stage" onclick="toggleDetail(3)">
+        <div class="stage-num y">3</div>
+        <h3>QUALIFY</h3>
+        <p class="st-sub">Lead → Sales Conversation</p>
+        <div class="st-metric bg-y">9 SDRs</div>
+        <div class="st-metric bg-g">30min pickup SLA</div>
+        <div class="st-metric bg-y">7-stage pipeline</div>
+      </div>
+      
+      <div class="stage has-problem" onclick="toggleDetail(4)">
+        <div class="stage-num r">4</div>
+        <h3>CLOSE</h3>
+        <p class="st-sub">Conversation → Customer</p>
+        <div class="st-metric bg-r">0.32% close rate (tgt 1%)</div>
+        <div class="st-metric bg-r">$5,979 avg deal (-15%)</div>
+        <div class="st-metric bg-y">7 closers, 99 sales MTD</div>
+      </div>
+      
+      <div class="stage" onclick="toggleDetail(5)">
+        <div class="stage-num y">5</div>
+        <h3>RETAIN</h3>
+        <p class="st-sub">Customer → Renewed</p>
+        <div class="st-metric bg-y">90 renewals (Mar MTD)</div>
+        <div class="st-metric bg-y">Target: 30% renewal rate</div>
+      </div>
+      
+      <div class="stage has-problem" onclick="toggleDetail(6)">
+        <div class="stage-num r">6</div>
+        <h3>EXPAND</h3>
+        <p class="st-sub">Customer → Higher Tier</p>
+        <div class="st-metric bg-g">AI $3K → Elite $9K → Q $50K</div>
+        <div class="st-metric bg-r">Alumni program: NOT BUILT</div>
+      </div>
+      
+      <div class="detail-panel" id="detail-1">
+        <h4>Stage 1: Attention — Content Production Engine</h4>
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h5>Long Form (YouTube) — 9 Stages</h5>
             <ul>
-              <li>YouTube: Long-form 1-2/week (ideation→script→shoot→edit→package→publish)</li>
-              <li>Instagram: Reels 3-5/week (80% of follower growth)</li>
-              <li>LinkedIn: Daily posts (30+ leads/week)</li>
-              <li>X/Threads: 5+/day</li>
-              <li>Paid ads: $100K/mo on lead magnets ($1.83 CPL)</li>
+              <li>Ideation (Wed weekly) → Scripting (2wks ahead) → Shoot</li>
+              <li>Edit (11 standards, V1 6d, final 10d) → Package (thumbnails 48h)</li>
+              <li>Publish (06:00 PST) → Podcast (Spotify 6AM)</li>
+              <li>Buffer: 2+ videos, scripts 2wks ahead</li>
             </ul>
-            <strong>Team:</strong> 15 people (Sam, Nic, Arturo, Spencer, Ollie, Koen, Joel, Leo, editors)
-            <br><strong>SLA:</strong> Scripts 2wks ahead, LF edit V1 6d/final 10d, revisions <24h
+          </div>
+          <div class="detail-section">
+            <h5>Short Form (IG/TikTok) — 6 Stages</h5>
+            <ul>
+              <li>3 pillars, beat sheets, batch shooting (≤120s)</li>
+              <li>7 editing principles → Frame.io review → Post 3-5/week</li>
+              <li>Buffer: 14+ videos (7-day), Trial Reels 3-5/day</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <h5>Team (15 people)</h5>
+            <ul>
+              <li>Sam (Creative Director), Nic (Head LF), Arturo (Head Video)</li>
+              <li>Spencer/Ollie (SF), Koen (Production), Joel (Word), Leo (Thumbnails)</li>
+              <li>Hamid, Alex (Copy), Alexa (Studio), LF + SF Editors</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <h5>Paid Acquisition</h5>
+            <ul>
+              <li>$100K/mo on lead magnet ads</li>
+              <li>5 flagship playbooks, $1.83 CPL</li>
+              <li>Comp: 50% followers / 50% leads</li>
+            </ul>
           </div>
         </div>
-        
-        <div class="stage" data-stage="2">
-          <div class="stage-number">2</div>
-          <h3>CAPTURE</h3>
-          <p class="subtitle">Follower → Lead</p>
-          <div class="stage-metric">30,761 DM chats MTD</div>
-          <div class="stage-metric yellow">Revvio automation 1-2min</div>
-          <div class="stage-details">
-            <strong>CTA Keywords:</strong>
+      </div>
+      
+      <div class="detail-panel" id="detail-2">
+        <h4>Stage 2: Capture — CTA & DM Automation</h4>
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h5>CTA Keywords</h5>
             <ul>
-              <li><strong>COACH</strong> — direct intent handraiser</li>
-              <li><strong>ELITE</strong> — direct intent handraiser</li>
-              <li><strong>BONUS</strong> — lead magnet</li>
-              <li><strong>SWITCH</strong> — lead magnet</li>
+              <li><strong>COACH</strong> — direct intent handraiser (→ closer)</li>
+              <li><strong>ELITE</strong> — direct intent handraiser (→ closer)</li>
+              <li><strong>BONUS</strong> — lead magnet download</li>
+              <li><strong>SWITCH</strong> — lead magnet download</li>
+              <li>Campaign-specific: EA, Delegation, Pricing, Hiring, Systems</li>
             </ul>
-            <strong>Lead Magnets:</strong> 5 flagship playbooks, $100K/mo, $1.83 CPL
-            <br><strong>Bottleneck:</strong> DM automation misses during viral spikes (725 replies in 1 day)
+          </div>
+          <div class="detail-section">
+            <h5>Automation Flow</h5>
+            <ul>
+              <li>Revvio auto-reply: 1-2 min delay after keyword DM</li>
+              <li>COACH/ELITE → direct to closer calendar</li>
+              <li>BONUS/SWITCH → playbook delivery → nurture sequence</li>
+              <li>6 CTA mechanisms: keyword, YT links, IG Stories, email, LinkedIn/X, bio</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <h5>🟡 Bottlenecks</h5>
+            <ul>
+              <li>DM automation misses during viral spikes (725 replies/day example)</li>
+              <li>ManyChat mentioned but not detailed — gap in docs</li>
+              <li>Post-playbook offer undefined (what happens after download?)</li>
+              <li>CTA conflict prevention needs 4-step checklist</li>
+            </ul>
           </div>
         </div>
-        
-        <div class="stage" data-stage="3">
-          <div class="stage-number">3</div>
-          <h3>QUALIFY</h3>
-          <p class="subtitle">Lead → Sales Conversation</p>
-          <div class="stage-metric">9 SDRs</div>
-          <div class="stage-metric">Rocket Selling 1-3</div>
-          <div class="stage-details">
-            <strong>Process:</strong>
+      </div>
+      
+      <div class="detail-panel" id="detail-3">
+        <h4>Stage 3: Qualify — SDR Pipeline</h4>
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h5>Process (Rocket Selling Steps 1-3)</h5>
             <ul>
               <li>Setup → Rapport → Qualification</li>
               <li>Bar: $100K+/year business</li>
-              <li>Nurture: Email 5-12 touches (2-4wks), SMS 3-6 (2wks)</li>
+              <li>Nurture: Email 5-12 touches (2-4wks)</li>
+              <li>SMS: 3-6 touches (2wks)</li>
+              <li>Follow-up priority order, 5-6 touches over 21 days</li>
             </ul>
-            <strong>SLA:</strong> SDR pickup 30min, 5-6 touches over 21 days
-            <br><strong>Pipeline:</strong> 7 stages
           </div>
-        </div>
-        
-        <div class="stage" data-stage="4">
-          <div class="stage-number">4</div>
-          <h3>CLOSE</h3>
-          <p class="subtitle">Conversation → Customer</p>
-          <div class="stage-metric red">0.32% close rate</div>
-          <div class="stage-metric red">99 sales / 30,761 chats</div>
-          <div class="stage-metric">Avg deal: $5,979</div>
-          <div class="stage-details">
-            <strong>Team:</strong> 7 Closers
+          <div class="detail-section">
+            <h5>Team & SLAs</h5>
             <ul>
-              <li>Chris Rigoudis: $396K / $725K (55%)</li>
-              <li>Jen Burton: $239K / $500K (48%)</li>
-              <li>Jay Foster: $178K / $500K (36%)</li>
-              <li>Nolan Dranchuk: $65K / $200K (33%)</li>
-              <li>Adam Hopewell: $60K / $125K (48%)</li>
-            </ul>
-            <strong>Products:</strong>
-            <ul>
-              <li>Dan AI: $3K/yr</li>
-              <li>Elite: $9K/yr</li>
-              <li>Quantum: $50K/yr</li>
-              <li>CEO Challenge: Free</li>
-            </ul>
-            <strong>🔴 Critical:</strong> Deal size erosion $7K→$6K (-15% YTD)
-          </div>
-        </div>
-        
-        <div class="stage" data-stage="5">
-          <div class="stage-number">5</div>
-          <h3>RETAIN</h3>
-          <p class="subtitle">Customer → Renewed</p>
-          <div class="stage-metric">90 renewals MTD</div>
-          <div class="stage-metric yellow">Target: 30% renewal rate</div>
-          <div class="stage-details">
-            <strong>Focus:</strong>
-            <ul>
-              <li>Keep existing clients engaged</li>
-              <li>Drive renewals through value delivery</li>
-              <li>Current renewal rate needs improvement</li>
+              <li>9 SDRs qualifying 30,761 chats/mo</li>
+              <li>SDR pickup SLA: 30 minutes</li>
+              <li>Pipeline: 7 stages to qualification</li>
+              <li>Tools: GoHighLevel, Revvio, Magic</li>
             </ul>
           </div>
         </div>
-        
-        <div class="stage" data-stage="6">
-          <div class="stage-number">6</div>
-          <h3>EXPAND</h3>
-          <p class="subtitle">Customer → Higher Tier</p>
-          <div class="stage-metric">AI → Elite → Quantum</div>
-          <div class="stage-metric red">Alumni: NOT BUILT</div>
-          <div class="stage-details">
-            <strong>Upgrade Path:</strong>
+      </div>
+      
+      <div class="detail-panel" id="detail-4">
+        <h4>Stage 4: Close — 🔴 Critical Bottleneck</h4>
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h5>Closer Performance (Mar MTD)</h5>
             <ul>
-              <li>Dan AI ($3K) → Elite ($9K)</li>
-              <li>Elite ($9K) → Quantum ($50K)</li>
+              <li>Chris Rigoudis: $396K / $725K target (55%)</li>
+              <li>Jen Burton: $239K / $500K target (48%)</li>
+              <li>Jay Foster: $178K / $500K target (36%) 🔴</li>
+              <li>Nolan Dranchuk: $65K / $200K target (33%) 🔴</li>
+              <li>Adam Hopewell: $60K / $125K target (48%)</li>
+              <li>Moira McFarlane: $25K / $20K (above target ✅)</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <h5>Products</h5>
+            <ul>
+              <li>Dan AI: $3K/yr (front door)</li>
+              <li>Elite: $9K/yr (core revenue driver)</li>
+              <li>Quantum: $50K/yr (high-touch, 12 open seats)</li>
+              <li>CEO Challenge: Free (lead gen event)</li>
+            </ul>
+          </div>
+          <div class="detail-section">
+            <h5>🔴 What's Broken</h5>
+            <ul>
+              <li>Close rate: 0.87% (Jan) → 0.76% (Feb) → 0.32% (Mar) — free fall</li>
+              <li>Deal size: $7K (Jan) → $6K (Mar) — are closers discounting?</li>
+              <li>Adam hits 1.32% — proves it's possible. Process/training issue.</li>
+              <li>At 1% rate: 308 sales/mo = +$1.25M/mo additional revenue</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="detail-panel" id="detail-5">
+        <h4>Stage 5: Retain</h4>
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h5>Current State</h5>
+            <ul>
+              <li>90 renewals MTD (Mar)</li>
+              <li>Target: 30% renewal rate</li>
+              <li>Revenue: $1.14M combined MTD</li>
+              <li>Customer success team manages retention</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="detail-panel" id="detail-6">
+        <h4>Stage 6: Expand — 🔴 Missing Infrastructure</h4>
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h5>Upgrade Path</h5>
+            <ul>
+              <li>Dan AI ($3K) → Elite ($9K) — natural progression</li>
+              <li>Elite ($9K) → Quantum ($50K) — 12 open seats</li>
               <li>Events: Media Empire, Couples Retreat, Jet Set</li>
             </ul>
-            <strong>Gap:</strong> No alumni program for non-renewals (1,100/year missed opportunity)
+          </div>
+          <div class="detail-section">
+            <h5>🔴 What's Missing</h5>
+            <ul>
+              <li>Alumni program NOT BUILT — 1,100 Elite non-renewals/year lost</li>
+              <li>30% convert to $2K alumni = $660K/year left on the table</li>
+              <li>No systematic upsell process documented</li>
+            </ul>
           </div>
         </div>
       </div>
-    </section>
-    
-    <section class="channels">
-      <h2>Channel Performance</h2>
-      <div class="channel-bar green">
-        <div class="fill" style="width: 85%;"></div>
-        <div class="content">
-          <div class="name">Instagram</div>
-          <div class="stats">$587K revenue · r=0.58 (2mo lag) · +87K followers MTD</div>
-        </div>
-      </div>
-      <div class="channel-bar yellow">
-        <div class="fill" style="width: 45%;"></div>
-        <div class="content">
-          <div class="name">LinkedIn</div>
-          <div class="stats">$39K revenue · r=0.58 (same month) · +5.8K followers</div>
-        </div>
-      </div>
-      <div class="channel-bar red">
-        <div class="fill" style="width: 25%;"></div>
-        <div class="content">
-          <div class="name">Email</div>
-          <div class="stats">$75K revenue (was $175K Jan) · -57% collapse · weak signal r=0.34</div>
-        </div>
-      </div>
-      <div class="channel-bar red">
-        <div class="fill" style="width: 15%;"></div>
-        <div class="content">
-          <div class="name">SMS/Web</div>
-          <div class="stats">$84K revenue (was $442K Jan) · -81% collapse · r=0.42</div>
-        </div>
-      </div>
-    </section>
-    
-    <section class="problems">
-      <h2>🔴 Critical Problems</h2>
-      
-      <div class="problem-card">
-        <h4>1. Close Rate Catastrophe: 0.32% vs 1.0% Target</h4>
-        <p>Only 99 sales from 30,761 chats. If we hit 1% target, that's 308 sales = +$1.25M/month additional revenue. Three closers (Chris 0.30%, Jay 0.25%, Nolan 0.18%) severely underperform while Adam hits 1.32%.</p>
-        <div class="fix">→ Fix: Audit SDR→Closer handoff. Is qualification broken (bad leads) or closers need training? Clone Adam's process.</div>
-      </div>
-      
-      <div class="problem-card">
-        <h4>2. Deal Size Erosion: $7K → $6K Avg (-15% YTD)</h4>
-        <p>Average deal size dropped from $7K (Jan, 320 deals) → $6K (Feb, 275 deals) → $5,979 (Mar MTD, 183 deals). Fewer deals AND smaller deals = double revenue compression.</p>
-        <div class="fix">→ Fix: Review sales process. Are closers discounting to hit targets? Are we attracting smaller clients? Enforce minimum deal size or raise prices.</div>
-      </div>
-      
-      <div class="problem-card">
-        <h4>3. Email Channel Collapse: $175K → $75K (-57%)</h4>
-        <p>Email revenue fell off a cliff in Feb. Something broke in the lead capture → email nurture pipeline around late January. Weak correlation (r=0.34) suggests the channel itself may not be viable long-term.</p>
-        <div class="fix">→ Fix: Audit email automation. Check deliverability, open rates, CTA performance. If broken, kill it and reallocate budget to Instagram/LinkedIn (proven r=0.58 channels).</div>
-      </div>
-      
-      <div class="problem-card">
-        <h4>4. SMS/Web Channel Obliterated: $442K → $84K (-81%)</h4>
-        <p>Website/SMS channel (strongest revenue correlation per prior analysis) collapsed from $442K (Jan, 58 deals) → $268K (Feb) → $84K (Mar MTD, ~20 deals projected). This breakdown will compound in May-June due to 2-month lag effect.</p>
-        <div class="fix">→ Fix: URGENT. Reverse-engineer what broke. Was it a platform change? CTA conflict? Automation failure? This is the single biggest revenue leak.</div>
-      </div>
-    </section>
-    
-    <footer>
-      <p>Source: CEO Dashboard API (Stripe, MySQL, Greenhouse) · Updated Mar 19, 2026 18:40 UTC</p>
-      <p><a href="https://www.notion.so/Monetization-System-Map-31ec61f3f77e81b1bc7acdee9b3a6042" style="color: #48c78e; text-decoration: none;">View Full Documentation in Notion →</a></p>
-    </footer>
-  </div>
+    </div>
+  </section>
   
-  <script>
-    // Stage expansion
-    document.querySelectorAll('.stage').forEach(stage => {
-      stage.addEventListener('click', () => {
-        const isExpanded = stage.classList.contains('expanded');
-        document.querySelectorAll('.stage').forEach(s => s.classList.remove('expanded'));
-        if (!isExpanded) {
-          stage.classList.add('expanded');
-        }
-      });
-    });
+  <!-- CHANNEL PERFORMANCE -->
+  <section class="channels">
+    <h2>Channel Performance</h2>
+    <p>Q1 2026 revenue by acquisition channel (Jan + Feb + Mar projected)</p>
+    <div class="ch-grid">
+      
+      <div class="ch-card g">
+        <div class="bg-fill" style="width:85%;"></div>
+        <div class="ch-content">
+          <div class="ch-name">Instagram</div>
+          <div class="ch-q1 g">$2.21M Q1</div>
+          <div class="ch-trend">r=0.58 correlation (2mo lag) · Strongest channel</div>
+          <div class="ch-months">
+            <span>Jan $682K</span>
+            <span>Feb $556K</span>
+            <span>Mar ~$972K ↑</span>
+          </div>
+          <div class="ch-corr">+288K followers Q1 · IG Reels drive 80%+ of growth</div>
+        </div>
+      </div>
+      
+      <div class="ch-card r">
+        <div class="bg-fill" style="width:40%;"></div>
+        <div class="ch-content">
+          <div class="ch-name">SMS / Website</div>
+          <div class="ch-q1 r">$847K Q1</div>
+          <div class="ch-trend">Collapsed 81% from Jan peak · r=0.42 (2mo lag)</div>
+          <div class="ch-months">
+            <span>Jan $442K</span>
+            <span>Feb $268K ↓</span>
+            <span>Mar ~$137K ↓↓</span>
+          </div>
+          <div class="ch-corr">Was #1 channel in Jan. Something broke late Jan. Will compound May-June.</div>
+        </div>
+      </div>
+      
+      <div class="ch-card r">
+        <div class="bg-fill" style="width:25%;"></div>
+        <div class="ch-content">
+          <div class="ch-name">Email</div>
+          <div class="ch-q1 r">$381K Q1</div>
+          <div class="ch-trend">Down 57% from Jan · Weak signal r=0.34</div>
+          <div class="ch-months">
+            <span>Jan $175K</span>
+            <span>Feb $83K ↓</span>
+            <span>Mar ~$123K ↗</span>
+          </div>
+          <div class="ch-corr">Slight Mar recovery. Check deliverability + nurture sequences.</div>
+        </div>
+      </div>
+      
+      <div class="ch-card y">
+        <div class="bg-fill" style="width:30%;"></div>
+        <div class="ch-content">
+          <div class="ch-name">LinkedIn</div>
+          <div class="ch-q1 y">$187K Q1</div>
+          <div class="ch-trend">Moderate signal r=0.58 (same month) · Steady</div>
+          <div class="ch-months">
+            <span>Jan $68K</span>
+            <span>Feb $56K</span>
+            <span>Mar ~$64K →</span>
+          </div>
+          <div class="ch-corr">+22K followers Q1 · 30+ leads/week from handraisers</div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+  
+  <!-- CRITICAL PROBLEMS -->
+  <section class="problems">
+    <h2>🔴 What's Broken — Fix These to Unlock Growth</h2>
     
-    // Animate channel bars on load
-    window.addEventListener('load', () => {
-      document.querySelectorAll('.channel-bar .fill').forEach(fill => {
-        const width = fill.style.width;
-        fill.style.width = '0';
-        setTimeout(() => {
-          fill.style.width = width;
-        }, 100);
+    <div class="prob">
+      <h4>1. Close Rate in Free Fall: 0.87% → 0.32% Through Q1</h4>
+      <p>Close rate dropped every month this quarter. At 1% target with current chat volume (30K+/mo), that's 308 sales vs 99 today. Revenue upside: $1.25M/month. Three closers significantly underperform while Adam proves 1.32% is achievable.</p>
+      <div class="fix">→ <strong>Fix:</strong> Clone Adam's process. Audit SDR handoff quality. Determine if leads are bad (qualification issue) or closers need training (sales issue). Each 0.1% = $125K/mo.</div>
+    </div>
+    
+    <div class="prob">
+      <h4>2. SMS/Web Channel Collapsed 81%: $442K → $84K</h4>
+      <p>Was the #1 revenue channel in January. Something broke — platform change? CTA conflict? Automation failure? Due to 2-month lag correlation (r=0.42), this collapse will hit revenue hardest in May-June if not reversed now.</p>
+      <div class="fix">→ <strong>Fix:</strong> URGENT. Reverse-engineer what changed between Jan and Feb. Check SMS delivery rates, website funnel, GoHighLevel automation. This is the single biggest revenue leak.</div>
+    </div>
+    
+    <div class="prob">
+      <h4>3. Deal Size Erosion: $7K → $6K (-15% YTD)</h4>
+      <p>Average deal size dropped every month. Fewer deals AND smaller deals = double revenue compression. Combined with close rate decline, this creates a compounding problem.</p>
+      <div class="fix">→ <strong>Fix:</strong> Are closers discounting to hit targets? Is the mix shifting to more Dan AI ($3K) vs Elite ($9K)? Review pricing enforcement and product mix by closer.</div>
+    </div>
+    
+    <div class="prob">
+      <h4>4. Email Revenue Down 57%: No Clear Recovery Path</h4>
+      <p>Weak correlation (r=0.34) suggests email may not be a reliable channel. Slight Mar recovery but still way below Jan baseline. Check if this is a deliverability issue or fundamental channel problem.</p>
+      <div class="fix">→ <strong>Fix:</strong> Audit email deliverability, open rates, and CTR. If fundamentally broken, reallocate resources to Instagram (r=0.58, proven) and LinkedIn (r=0.58, growing).</div>
+    </div>
+    
+    <div class="prob">
+      <h4>5. Alumni Program Not Built — $660K/yr Left on Table</h4>
+      <p>~1,100 Elite non-renewals per year with no downsell path. A $2K alumni tier at 30% conversion = $660K annual revenue recovered from churned customers.</p>
+      <div class="fix">→ <strong>Fix:</strong> Build and launch the alumni tier. Low-lift, high-impact. Captures revenue from customers who've already been sold once.</div>
+    </div>
+  </section>
+  
+  <footer>
+    <p>Monetization System Map · Q1 2026 · Source: CEO Dashboard API (Stripe, MySQL, Greenhouse)</p>
+    <p style="margin-top:4px;"><a href="https://www.notion.so/Monetization-System-Map-31ec61f3f77e81b1bc7acdee9b3a6042">View Full Documentation in Notion →</a> · <a href="https://ceo-dashboard-nine.vercel.app">CEO Dashboard →</a></p>
+  </footer>
+  
+</div>
+
+<script>
+let activeDetail = null;
+
+function toggleDetail(n) {
+  const panel = document.getElementById('detail-' + n);
+  const stages = document.querySelectorAll('.stage');
+  const panels = document.querySelectorAll('.detail-panel');
+  
+  // Close all
+  panels.forEach(p => p.classList.remove('show'));
+  stages.forEach(s => s.classList.remove('active'));
+  
+  if (activeDetail === n) {
+    activeDetail = null;
+    return;
+  }
+  
+  // Open selected
+  panel.classList.add('show');
+  // Find the stage and mark active
+  const stageEls = document.querySelectorAll('.stage');
+  if (stageEls[n-1]) stageEls[n-1].classList.add('active');
+  activeDetail = n;
+  
+  // Scroll to panel on mobile
+  if (window.innerWidth < 900) {
+    setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+  }
+}
+
+// Animate channel fills on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const fills = entry.target.querySelectorAll('.bg-fill');
+      fills.forEach(f => {
+        const w = f.style.width;
+        f.style.width = '0';
+        setTimeout(() => f.style.width = w, 50);
       });
-    });
-  </script>
+    }
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.ch-card').forEach(card => observer.observe(card));
+</script>
 </body>
 </html>
