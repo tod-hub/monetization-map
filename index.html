@@ -8,167 +8,438 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: #0a0a0f;
-      color: #fff;
+      color: #e5e5e5;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
+    .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+    
+    /* Header */
     header {
-      width: 100%;
-      max-width: 1400px;
-      padding: 24px 32px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       border-bottom: 1px solid #1a1a2e;
+      padding-bottom: 20px;
+      margin-bottom: 30px;
     }
-    header h1 {
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-    }
-    header .meta {
-      font-size: 13px;
-      color: #48c78e;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    header .meta .dot {
-      width: 8px;
-      height: 8px;
-      background: #48c78e;
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-    .container {
-      width: 100%;
-      max-width: 1400px;
-      padding: 24px 32px;
-      flex: 1;
-    }
-    .map-wrapper {
-      background: #12121a;
-      border: 1px solid #1e1e30;
+    header h1 { font-size: 28px; font-weight: 600; margin-bottom: 8px; }
+    header .subtitle { color: #888; font-size: 14px; }
+    
+    /* Executive Summary */
+    .exec-summary {
+      background: linear-gradient(135deg, #1a1a2e 0%, #12121a 100%);
+      border: 1px solid #2a2a40;
       border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 30px;
+    }
+    .exec-summary h2 { font-size: 18px; margin-bottom: 16px; color: #48c78e; }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .metric-card {
+      background: #0f0f14;
       padding: 16px;
-      overflow: auto;
-      cursor: grab;
+      border-radius: 8px;
+      border-left: 3px solid;
+    }
+    .metric-card.green { border-color: #48c78e; }
+    .metric-card.yellow { border-color: #f7b731; }
+    .metric-card.red { border-color: #eb3b5a; }
+    .metric-card .label { font-size: 12px; color: #888; text-transform: uppercase; }
+    .metric-card .value { font-size: 24px; font-weight: 600; margin: 4px 0; }
+    .metric-card .sub { font-size: 13px; color: #aaa; }
+    
+    .problem-alert {
+      background: rgba(235, 59, 90, 0.1);
+      border: 1px solid #eb3b5a;
+      border-radius: 8px;
+      padding: 16px;
+      color: #ffcdd2;
+    }
+    .problem-alert strong { color: #eb3b5a; }
+    
+    /* Journey Flow */
+    .journey { margin: 40px 0; }
+    .journey h2 { font-size: 20px; margin-bottom: 24px; }
+    .stages {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 20px;
+    }
+    .stage {
+      min-width: 280px;
+      background: #12121a;
+      border: 1px solid #2a2a40;
+      border-radius: 12px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
       position: relative;
     }
-    .map-wrapper:active { cursor: grabbing; }
-    .map-wrapper img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 8px;
+    .stage:hover {
+      transform: translateY(-4px);
+      border-color: #48c78e;
+      box-shadow: 0 8px 24px rgba(72, 199, 142, 0.15);
     }
-    .controls {
+    .stage.expanded {
+      min-width: 400px;
+      background: #1a1a2e;
+    }
+    .stage-number {
+      width: 32px;
+      height: 32px;
+      background: #48c78e;
+      border-radius: 50%;
       display: flex;
-      gap: 12px;
-      margin-top: 16px;
+      align-items: center;
       justify-content: center;
+      font-weight: 600;
+      color: #0a0a0f;
+      margin-bottom: 12px;
     }
-    .controls button {
-      background: #1e1e30;
-      border: 1px solid #2a2a40;
-      color: #ccc;
-      padding: 8px 20px;
-      border-radius: 8px;
+    .stage h3 { font-size: 16px; margin-bottom: 6px; }
+    .stage .subtitle { font-size: 13px; color: #888; margin-bottom: 12px; }
+    .stage-metric {
+      background: rgba(72, 199, 142, 0.1);
+      padding: 8px 12px;
+      border-radius: 6px;
       font-size: 14px;
-      cursor: pointer;
-      transition: all 0.2s;
+      margin-bottom: 8px;
     }
-    .controls button:hover {
-      background: #2a2a40;
-      color: #fff;
+    .stage-metric.red { background: rgba(235, 59, 90, 0.1); color: #ffcdd2; }
+    .stage-metric.yellow { background: rgba(247, 183, 49, 0.1); color: #ffe4a3; }
+    .stage-details {
+      display: none;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #2a2a40;
+      font-size: 13px;
+      color: #aaa;
     }
-    footer {
-      width: 100%;
-      max-width: 1400px;
-      padding: 16px 32px 24px;
+    .stage.expanded .stage-details { display: block; }
+    .stage-details ul { list-style: none; padding: 0; }
+    .stage-details li { padding: 6px 0; padding-left: 16px; position: relative; }
+    .stage-details li:before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: #48c78e;
+    }
+    
+    /* Channel Performance */
+    .channels { margin: 40px 0; }
+    .channels h2 { font-size: 20px; margin-bottom: 20px; }
+    .channel-bar {
+      background: #12121a;
+      border: 1px solid #2a2a40;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .channel-bar .fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      opacity: 0.1;
+      transition: width 0.8s ease;
+    }
+    .channel-bar.green .fill { background: #48c78e; }
+    .channel-bar.yellow .fill { background: #f7b731; }
+    .channel-bar.red .fill { background: #eb3b5a; }
+    .channel-bar .content {
+      position: relative;
+      z-index: 1;
       display: flex;
       justify-content: space-between;
+      align-items: center;
+    }
+    .channel-bar .name { font-weight: 600; font-size: 15px; }
+    .channel-bar .stats { font-size: 13px; color: #aaa; }
+    
+    /* Problems Section */
+    .problems { margin: 40px 0; }
+    .problems h2 { font-size: 20px; margin-bottom: 20px; color: #eb3b5a; }
+    .problem-card {
+      background: rgba(235, 59, 90, 0.05);
+      border-left: 3px solid #eb3b5a;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+    .problem-card h4 { font-size: 15px; margin-bottom: 8px; color: #eb3b5a; }
+    .problem-card p { font-size: 13px; color: #ccc; line-height: 1.6; }
+    .problem-card .fix { 
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(235, 59, 90, 0.2);
+      font-size: 12px;
+      color: #48c78e;
+    }
+    
+    /* Footer */
+    footer {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid #1a1a2e;
+      text-align: center;
       font-size: 12px;
       color: #555;
-      border-top: 1px solid #1a1a2e;
     }
-    footer a { color: #48c78e; text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-    .zoom-level { color: #666; font-size: 13px; text-align: center; margin-top: 8px; }
+    
+    @media (max-width: 768px) {
+      .stages { flex-direction: column; }
+      .stage { min-width: 100%; }
+      .metrics-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Monetization System Map — Martell Group</h1>
-    <div class="meta">
-      <span class="dot"></span>
-      Live Data · Mar 19, 2026
-    </div>
-  </header>
-  
   <div class="container">
-    <div class="map-wrapper" id="mapWrapper">
-      <img src="monetization-map.png" alt="Monetization System Map" id="mapImg" />
-    </div>
-    <div class="controls">
-      <button onclick="zoom(0.8)">− Zoom Out</button>
-      <button onclick="zoom(1)">Reset</button>
-      <button onclick="zoom(1.5)">+ Zoom In</button>
-      <button onclick="zoom(2)">2x</button>
-      <button onclick="window.open('monetization-map.png', '_blank')">↗ Full Size</button>
-    </div>
-    <div class="zoom-level" id="zoomLevel">100%</div>
-  </div>
-
-  <footer>
-    <span>Source: CEO Dashboard API (Stripe, MySQL, Greenhouse)</span>
-    <span><a href="https://www.notion.so/Monetization-System-Map-31ec61f3f77e81b1bc7acdee9b3a6042">View in Notion →</a></span>
-  </footer>
-
-  <script>
-    let currentZoom = 1;
-    const img = document.getElementById('mapImg');
-    const wrapper = document.getElementById('mapWrapper');
-    const level = document.getElementById('zoomLevel');
+    <header>
+      <h1>Monetization System Map</h1>
+      <p class="subtitle">Martell Group — Complete Stranger to Client Journey · Live Metrics Mar 19, 2026</p>
+    </header>
     
-    function zoom(z) {
-      currentZoom = z;
-      img.style.width = (z * 100) + '%';
-      level.textContent = Math.round(z * 100) + '%';
-    }
-
-    // Scroll wheel zoom
-    wrapper.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      const delta = e.deltaY > 0 ? -0.1 : 0.1;
-      currentZoom = Math.max(0.5, Math.min(3, currentZoom + delta));
-      img.style.width = (currentZoom * 100) + '%';
-      level.textContent = Math.round(currentZoom * 100) + '%';
+    <section class="exec-summary">
+      <h2>Executive Summary</h2>
+      <div class="metrics-grid">
+        <div class="metric-card yellow">
+          <div class="label">Revenue MTD</div>
+          <div class="value">$1.14M</div>
+          <div class="sub">of $2M target (57%)</div>
+        </div>
+        <div class="metric-card red">
+          <div class="label">Close Rate</div>
+          <div class="value">0.32%</div>
+          <div class="sub">target 1.0% | -$1.25M/mo lost</div>
+        </div>
+        <div class="metric-card yellow">
+          <div class="label">Followers</div>
+          <div class="value">10.0M</div>
+          <div class="sub">+294K MTD (58% of target)</div>
+        </div>
+      </div>
+      <div class="problem-alert">
+        <strong>🔴 #1 Problem:</strong> Close rate stuck at 0.32% vs 1.0% target. Every 0.1% improvement = $125K/month. Root cause: qualification broken or closers underperforming.
+      </div>
+    </section>
+    
+    <section class="journey">
+      <h2>The Journey: Stranger → Client</h2>
+      <div class="stages" id="stages">
+        <div class="stage" data-stage="1">
+          <div class="stage-number">1</div>
+          <h3>ATTENTION</h3>
+          <p class="subtitle">Stranger → Follower</p>
+          <div class="stage-metric">10.0M followers</div>
+          <div class="stage-metric yellow">+294K MTD / 503K target</div>
+          <div class="stage-details">
+            <strong>How It Works:</strong>
+            <ul>
+              <li>YouTube: Long-form 1-2/week (ideation→script→shoot→edit→package→publish)</li>
+              <li>Instagram: Reels 3-5/week (80% of follower growth)</li>
+              <li>LinkedIn: Daily posts (30+ leads/week)</li>
+              <li>X/Threads: 5+/day</li>
+              <li>Paid ads: $100K/mo on lead magnets ($1.83 CPL)</li>
+            </ul>
+            <strong>Team:</strong> 15 people (Sam, Nic, Arturo, Spencer, Ollie, Koen, Joel, Leo, editors)
+            <br><strong>SLA:</strong> Scripts 2wks ahead, LF edit V1 6d/final 10d, revisions <24h
+          </div>
+        </div>
+        
+        <div class="stage" data-stage="2">
+          <div class="stage-number">2</div>
+          <h3>CAPTURE</h3>
+          <p class="subtitle">Follower → Lead</p>
+          <div class="stage-metric">30,761 DM chats MTD</div>
+          <div class="stage-metric yellow">Revvio automation 1-2min</div>
+          <div class="stage-details">
+            <strong>CTA Keywords:</strong>
+            <ul>
+              <li><strong>COACH</strong> — direct intent handraiser</li>
+              <li><strong>ELITE</strong> — direct intent handraiser</li>
+              <li><strong>BONUS</strong> — lead magnet</li>
+              <li><strong>SWITCH</strong> — lead magnet</li>
+            </ul>
+            <strong>Lead Magnets:</strong> 5 flagship playbooks, $100K/mo, $1.83 CPL
+            <br><strong>Bottleneck:</strong> DM automation misses during viral spikes (725 replies in 1 day)
+          </div>
+        </div>
+        
+        <div class="stage" data-stage="3">
+          <div class="stage-number">3</div>
+          <h3>QUALIFY</h3>
+          <p class="subtitle">Lead → Sales Conversation</p>
+          <div class="stage-metric">9 SDRs</div>
+          <div class="stage-metric">Rocket Selling 1-3</div>
+          <div class="stage-details">
+            <strong>Process:</strong>
+            <ul>
+              <li>Setup → Rapport → Qualification</li>
+              <li>Bar: $100K+/year business</li>
+              <li>Nurture: Email 5-12 touches (2-4wks), SMS 3-6 (2wks)</li>
+            </ul>
+            <strong>SLA:</strong> SDR pickup 30min, 5-6 touches over 21 days
+            <br><strong>Pipeline:</strong> 7 stages
+          </div>
+        </div>
+        
+        <div class="stage" data-stage="4">
+          <div class="stage-number">4</div>
+          <h3>CLOSE</h3>
+          <p class="subtitle">Conversation → Customer</p>
+          <div class="stage-metric red">0.32% close rate</div>
+          <div class="stage-metric red">99 sales / 30,761 chats</div>
+          <div class="stage-metric">Avg deal: $5,979</div>
+          <div class="stage-details">
+            <strong>Team:</strong> 7 Closers
+            <ul>
+              <li>Chris Rigoudis: $396K / $725K (55%)</li>
+              <li>Jen Burton: $239K / $500K (48%)</li>
+              <li>Jay Foster: $178K / $500K (36%)</li>
+              <li>Nolan Dranchuk: $65K / $200K (33%)</li>
+              <li>Adam Hopewell: $60K / $125K (48%)</li>
+            </ul>
+            <strong>Products:</strong>
+            <ul>
+              <li>Dan AI: $3K/yr</li>
+              <li>Elite: $9K/yr</li>
+              <li>Quantum: $50K/yr</li>
+              <li>CEO Challenge: Free</li>
+            </ul>
+            <strong>🔴 Critical:</strong> Deal size erosion $7K→$6K (-15% YTD)
+          </div>
+        </div>
+        
+        <div class="stage" data-stage="5">
+          <div class="stage-number">5</div>
+          <h3>RETAIN</h3>
+          <p class="subtitle">Customer → Renewed</p>
+          <div class="stage-metric">90 renewals MTD</div>
+          <div class="stage-metric yellow">Target: 30% renewal rate</div>
+          <div class="stage-details">
+            <strong>Focus:</strong>
+            <ul>
+              <li>Keep existing clients engaged</li>
+              <li>Drive renewals through value delivery</li>
+              <li>Current renewal rate needs improvement</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="stage" data-stage="6">
+          <div class="stage-number">6</div>
+          <h3>EXPAND</h3>
+          <p class="subtitle">Customer → Higher Tier</p>
+          <div class="stage-metric">AI → Elite → Quantum</div>
+          <div class="stage-metric red">Alumni: NOT BUILT</div>
+          <div class="stage-details">
+            <strong>Upgrade Path:</strong>
+            <ul>
+              <li>Dan AI ($3K) → Elite ($9K)</li>
+              <li>Elite ($9K) → Quantum ($50K)</li>
+              <li>Events: Media Empire, Couples Retreat, Jet Set</li>
+            </ul>
+            <strong>Gap:</strong> No alumni program for non-renewals (1,100/year missed opportunity)
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="channels">
+      <h2>Channel Performance</h2>
+      <div class="channel-bar green">
+        <div class="fill" style="width: 85%;"></div>
+        <div class="content">
+          <div class="name">Instagram</div>
+          <div class="stats">$587K revenue · r=0.58 (2mo lag) · +87K followers MTD</div>
+        </div>
+      </div>
+      <div class="channel-bar yellow">
+        <div class="fill" style="width: 45%;"></div>
+        <div class="content">
+          <div class="name">LinkedIn</div>
+          <div class="stats">$39K revenue · r=0.58 (same month) · +5.8K followers</div>
+        </div>
+      </div>
+      <div class="channel-bar red">
+        <div class="fill" style="width: 25%;"></div>
+        <div class="content">
+          <div class="name">Email</div>
+          <div class="stats">$75K revenue (was $175K Jan) · -57% collapse · weak signal r=0.34</div>
+        </div>
+      </div>
+      <div class="channel-bar red">
+        <div class="fill" style="width: 15%;"></div>
+        <div class="content">
+          <div class="name">SMS/Web</div>
+          <div class="stats">$84K revenue (was $442K Jan) · -81% collapse · r=0.42</div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="problems">
+      <h2>🔴 Critical Problems</h2>
+      
+      <div class="problem-card">
+        <h4>1. Close Rate Catastrophe: 0.32% vs 1.0% Target</h4>
+        <p>Only 99 sales from 30,761 chats. If we hit 1% target, that's 308 sales = +$1.25M/month additional revenue. Three closers (Chris 0.30%, Jay 0.25%, Nolan 0.18%) severely underperform while Adam hits 1.32%.</p>
+        <div class="fix">→ Fix: Audit SDR→Closer handoff. Is qualification broken (bad leads) or closers need training? Clone Adam's process.</div>
+      </div>
+      
+      <div class="problem-card">
+        <h4>2. Deal Size Erosion: $7K → $6K Avg (-15% YTD)</h4>
+        <p>Average deal size dropped from $7K (Jan, 320 deals) → $6K (Feb, 275 deals) → $5,979 (Mar MTD, 183 deals). Fewer deals AND smaller deals = double revenue compression.</p>
+        <div class="fix">→ Fix: Review sales process. Are closers discounting to hit targets? Are we attracting smaller clients? Enforce minimum deal size or raise prices.</div>
+      </div>
+      
+      <div class="problem-card">
+        <h4>3. Email Channel Collapse: $175K → $75K (-57%)</h4>
+        <p>Email revenue fell off a cliff in Feb. Something broke in the lead capture → email nurture pipeline around late January. Weak correlation (r=0.34) suggests the channel itself may not be viable long-term.</p>
+        <div class="fix">→ Fix: Audit email automation. Check deliverability, open rates, CTA performance. If broken, kill it and reallocate budget to Instagram/LinkedIn (proven r=0.58 channels).</div>
+      </div>
+      
+      <div class="problem-card">
+        <h4>4. SMS/Web Channel Obliterated: $442K → $84K (-81%)</h4>
+        <p>Website/SMS channel (strongest revenue correlation per prior analysis) collapsed from $442K (Jan, 58 deals) → $268K (Feb) → $84K (Mar MTD, ~20 deals projected). This breakdown will compound in May-June due to 2-month lag effect.</p>
+        <div class="fix">→ Fix: URGENT. Reverse-engineer what broke. Was it a platform change? CTA conflict? Automation failure? This is the single biggest revenue leak.</div>
+      </div>
+    </section>
+    
+    <footer>
+      <p>Source: CEO Dashboard API (Stripe, MySQL, Greenhouse) · Updated Mar 19, 2026 18:40 UTC</p>
+      <p><a href="https://www.notion.so/Monetization-System-Map-31ec61f3f77e81b1bc7acdee9b3a6042" style="color: #48c78e; text-decoration: none;">View Full Documentation in Notion →</a></p>
+    </footer>
+  </div>
+  
+  <script>
+    // Stage expansion
+    document.querySelectorAll('.stage').forEach(stage => {
+      stage.addEventListener('click', () => {
+        const isExpanded = stage.classList.contains('expanded');
+        document.querySelectorAll('.stage').forEach(s => s.classList.remove('expanded'));
+        if (!isExpanded) {
+          stage.classList.add('expanded');
+        }
+      });
     });
-
-    // Drag to pan
-    let isDragging = false, startX, startY, scrollL, scrollT;
-    wrapper.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      startX = e.pageX - wrapper.offsetLeft;
-      startY = e.pageY - wrapper.offsetTop;
-      scrollL = wrapper.scrollLeft;
-      scrollT = wrapper.scrollTop;
-    });
-    wrapper.addEventListener('mouseleave', () => isDragging = false);
-    wrapper.addEventListener('mouseup', () => isDragging = false);
-    wrapper.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      e.preventDefault();
-      wrapper.scrollLeft = scrollL - (e.pageX - wrapper.offsetLeft - startX);
-      wrapper.scrollTop = scrollT - (e.pageY - wrapper.offsetTop - startY);
+    
+    // Animate channel bars on load
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.channel-bar .fill').forEach(fill => {
+        const width = fill.style.width;
+        fill.style.width = '0';
+        setTimeout(() => {
+          fill.style.width = width;
+        }, 100);
+      });
     });
   </script>
 </body>
