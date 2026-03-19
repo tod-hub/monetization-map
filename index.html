@@ -303,7 +303,7 @@
       <h1>Monetization System Map</h1>
       <p class="subtitle">Martell Group — Stranger → Client Journey</p>
     </div>
-    <div class="period-badge">● Q1 2026 (Jan–Mar)</div>
+    <div class="period-badge" id="last-updated">● Q1 2026 (Jan–Mar)</div>
   </header>
   
   <!-- EXECUTIVE SUMMARY -->
@@ -312,32 +312,32 @@
     <div class="metrics-row">
       <div class="kpi y">
         <div class="label">Q1 Revenue</div>
-        <div class="val">$5.1M</div>
-        <div class="sub">of $6M target (85%)</div>
+        <div class="val" data-live="revenue-mtd">$5.1M</div>
+        <div class="sub">of $6M target (<span data-live="revenue-pct">85%</span>)</div>
         <div class="trend flat">Jan $2.2M → Feb $1.6M → Mar ~$1.9M proj</div>
       </div>
       <div class="kpi r">
         <div class="label">Close Rate</div>
-        <div class="val">0.32%</div>
-        <div class="sub">target 1.0% | $1.25M/mo lost</div>
+        <div class="val" data-live="close-rate">0.32%</div>
+        <div class="sub">target 1.0% | <span data-live="close-rate-upside">$1.25M</span>/mo lost</div>
         <div class="trend down">↓ Jan 0.87% → Feb 0.76% → Mar 0.32%</div>
       </div>
       <div class="kpi y">
         <div class="label">Q1 Follower Growth</div>
-        <div class="val">+938K</div>
-        <div class="sub">10M total across all platforms</div>
+        <div class="val" data-live="followers-mtd">+938K</div>
+        <div class="sub"><span data-live="followers-total">10M</span> total across all platforms</div>
         <div class="trend up">↑ Mar recovering: +294K MTD</div>
       </div>
       <div class="kpi r">
         <div class="label">Avg Deal Size</div>
-        <div class="val">$5,979</div>
+        <div class="val" data-live="avg-deal">$5,979</div>
         <div class="sub">was $7K in Jan (-15%)</div>
         <div class="trend down">↓ Sustained erosion all quarter</div>
       </div>
       <div class="kpi y">
         <div class="label">New Clients Q1</div>
         <div class="val">~710</div>
-        <div class="sub">183 MTD Mar + Jan/Feb</div>
+        <div class="sub"><span data-live="new-clients">183</span> MTD Mar + Jan/Feb</div>
         <div class="trend flat">Renewals: 90 MTD in March</div>
       </div>
       <div class="kpi r">
@@ -389,9 +389,9 @@
         <div class="stage-num r">4</div>
         <h3>CLOSE</h3>
         <p class="st-sub">Conversation → Customer</p>
-        <div class="st-metric bg-r">0.32% close rate (tgt 1%)</div>
-        <div class="st-metric bg-y">$5,979 avg deal (Dan AI $2K pulling avg down)</div>
-        <div class="st-metric bg-y">4 closers + 1 CS, 99 sales MTD</div>
+        <div class="st-metric bg-r"><span data-live="close-rate">0.32%</span> close rate (tgt 1%)</div>
+        <div class="st-metric bg-y"><span data-live="avg-deal">$5,979</span> avg deal (Dan AI $2K pulling avg down)</div>
+        <div class="st-metric bg-y">4 closers + 1 CS, <span data-live="total-sales">99</span> sales MTD</div>
       </div>
       
       <div class="stage" onclick="toggleDetail(5)">
@@ -605,13 +605,13 @@
     <div style="background:#12121a;border:1px solid #2a2a40;border-radius:12px;padding:20px;margin-bottom:20px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
         <span style="font-size:14px;font-weight:600;">March Target: $2.0M</span>
-        <span style="font-size:14px;color:#f7b731;font-weight:600;">Projected: $1.91M (95%)</span>
+        <span style="font-size:14px;color:#f7b731;font-weight:600;"><span id="rev-proj">Projected: $1.91M (95%)</span></span>
       </div>
       <div style="background:#1a1a2e;border-radius:6px;height:12px;overflow:hidden;">
-        <div style="background:linear-gradient(90deg,#48c78e,#f7b731);height:100%;width:58%;border-radius:6px;transition:width 1s;"></div>
+        <div style="background:linear-gradient(90deg,#48c78e,#f7b731);height:100%;width:58%" id="rev-progress;border-radius:6px;transition:width 1s;"></div>
       </div>
       <div style="display:flex;justify-content:space-between;font-size:11px;color:#888;margin-top:6px;">
-        <span>MTD: $1.17M (day 19)</span>
+        <span id="rev-mtd-label">MTD: $1.17M (day 19)</span>
         <span>$2.0M target</span>
       </div>
       <div style="display:flex;gap:8px;margin-top:16px;overflow-x:auto;font-size:11px;">
@@ -695,13 +695,13 @@
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
       <div style="background:#0f0f14;padding:14px;border-radius:8px;border-left:3px solid #eb3b5a;">
         <div style="font-size:11px;color:#888;">CLOSE RATE</div>
-        <div style="font-size:22px;font-weight:700;color:#eb3b5a;">0.32%</div>
+        <div style="font-size:22px;font-weight:700;color:#eb3b5a;" data-live="monitor-close-rate">0.32%</div>
         <div style="font-size:12px;color:#888;">Target: 0.25%+ by Apr 30</div>
         <div style="font-size:11px;color:#888;">Owner: Eric</div>
       </div>
       <div style="background:#0f0f14;padding:14px;border-radius:8px;border-left:3px solid #eb3b5a;">
         <div style="font-size:11px;color:#888;">AVG DEAL SIZE</div>
-        <div style="font-size:22px;font-weight:700;color:#eb3b5a;">$5,979</div>
+        <div style="font-size:22px;font-weight:700;color:#eb3b5a;" data-live="monitor-deal-size">$5,979</div>
         <div style="font-size:12px;color:#888;">Target: $7,500 by Apr 30</div>
         <div style="font-size:11px;color:#888;">Owner: Eric</div>
       </div>
@@ -954,6 +954,112 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.2 });
 
 document.querySelectorAll('.ch-card').forEach(card => observer.observe(card));
+
+// === LIVE DATA FETCH ===
+async function loadLiveData() {
+  try {
+    const res = await fetch('https://ceo-dashboard-nine.vercel.app/api/dashboard');
+    const d = await res.json();
+    
+    const r = d.revenue;
+    const cr = d.closeRate;
+    const m = d.media;
+    const h = d.hiring;
+    const ps = d.pinkSkirt || {};
+    const channels = (d.channelCorrelations || {}).channels || [];
+    
+    const dayOfMonth = r.dayOfMonth;
+    const daysInMonth = r.daysInMonth;
+    const marPct = dayOfMonth / daysInMonth;
+    
+    const fmt = (n) => {
+      if (n >= 1e6) return '$' + (n/1e6).toFixed(2) + 'M';
+      if (n >= 1e3) return '$' + Math.round(n/1e3) + 'K';
+      return '$' + Math.round(n);
+    };
+    
+    // Helper to update elements by data-live attribute
+    const set = (id, text) => {
+      const els = document.querySelectorAll('[data-live="' + id + '"]');
+      els.forEach(el => el.textContent = text);
+    };
+    
+    // Executive summary KPIs
+    set('revenue-mtd', fmt(r.combinedMonthToDate));
+    set('revenue-pct', Math.round(r.combinedMonthToDate / r.monthTarget * 100) + '%');
+    set('close-rate', cr.overallCloseRate + '%');
+    set('close-rate-upside', fmt(cr.revenueUpside));
+    set('followers-total', (m.totalFollowers / 1e6).toFixed(1) + 'M');
+    set('followers-mtd', '+' + Math.round(m.followerGrowthMonth / 1e3) + 'K');
+    set('followers-pct', Math.round(m.followerGrowthMonth / m.monthlyFollowerTarget * 100) + '%');
+    set('avg-deal', '$' + cr.avgDealSize.toLocaleString());
+    set('new-clients', r.newClientsMTD);
+    set('renewals-mtd', r.renewalsMTD);
+    set('total-sales', cr.totalSales);
+    set('total-chats', cr.totalChats.toLocaleString());
+    
+    // Revenue progress bar
+    const revBar = document.getElementById('rev-progress');
+    if (revBar) revBar.style.width = Math.min(r.combinedMonthToDate / r.monthTarget * 100, 100) + '%';
+    
+    const revMtd = document.getElementById('rev-mtd-label');
+    if (revMtd) revMtd.textContent = 'MTD: ' + fmt(r.combinedMonthToDate) + ' (day ' + dayOfMonth + ')';
+    
+    const revProj = document.getElementById('rev-proj');
+    if (revProj) revProj.textContent = 'Projected: ' + fmt(r.projectedMonthEnd) + ' (' + Math.round(r.projectedMonthEnd / r.monthTarget * 100) + '%)';
+    
+    // Results monitor cards
+    set('monitor-close-rate', cr.overallCloseRate + '%');
+    set('monitor-deal-size', '$' + cr.avgDealSize.toLocaleString());
+    
+    // Closer performance in stage 4
+    const closersList = d.closerDetails || [];
+    const closerEl = document.getElementById('closer-data');
+    if (closerEl && closersList.length) {
+      closerEl.innerHTML = closersList.map(c => {
+        const pct = c.monthlyTarget > 0 ? Math.round(c.mtdRevenue / c.monthlyTarget * 100) : '';
+        const tgt = c.monthlyTarget > 0 ? ' / ' + fmt(c.monthlyTarget) + ' (' + pct + '%)' : '';
+        const trend = c.sixMonthTrend === 'up' ? ' ↑' : c.sixMonthTrend === 'down' ? ' ↓' : '';
+        return '<li>' + c.name + ': ' + fmt(c.mtdRevenue) + tgt + ' | 6mo avg ' + fmt(c.sixMonthAvg) + trend + '</li>';
+      }).join('');
+    }
+    
+    // Channel data
+    const chMap = {};
+    channels.forEach(ch => {
+      const data = {};
+      (ch.monthlyData || []).forEach(m => data[m.month] = m);
+      chMap[ch.channel] = { ...ch, byMonth: data };
+    });
+    
+    ['Instagram', 'SMS', 'Email', 'LinkedIn'].forEach(name => {
+      const ch = chMap[name];
+      if (!ch) return;
+      const jan = (ch.byMonth['2026-01'] || {}).revenue || 0;
+      const feb = (ch.byMonth['2026-02'] || {}).revenue || 0;
+      const marMtd = (ch.byMonth['2026-03'] || {}).revenue || 0;
+      const marProj = marMtd / marPct;
+      const q1 = jan + feb + marProj;
+      const id = name.toLowerCase().replace(/\s/g, '');
+      set('ch-' + id + '-q1', fmt(q1) + ' Q1');
+      set('ch-' + id + '-jan', 'Jan ' + fmt(jan));
+      set('ch-' + id + '-feb', 'Feb ' + fmt(feb));
+      set('ch-' + id + '-mar', 'Mar ~' + fmt(marProj));
+    });
+    
+    // Update timestamp
+    const ts = new Date(d.lastUpdated);
+    const tsEl = document.getElementById('last-updated');
+    if (tsEl) tsEl.textContent = 'Live data · Updated ' + ts.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZoneName: 'short' });
+    
+  } catch (e) {
+    console.warn('Failed to load live data:', e);
+    const tsEl = document.getElementById('last-updated');
+    if (tsEl) tsEl.textContent += ' (live refresh failed — showing cached data)';
+  }
+}
+
+loadLiveData();
 </script>
 </body>
 </html>
