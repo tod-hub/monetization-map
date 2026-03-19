@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monetization System Map — Martell Group</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a0f;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      width: 100%;
+      max-width: 1400px;
+      padding: 24px 32px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1a1a2e;
+    }
+    header h1 {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    header .meta {
+      font-size: 13px;
+      color: #48c78e;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    header .meta .dot {
+      width: 8px;
+      height: 8px;
+      background: #48c78e;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      padding: 24px 32px;
+      flex: 1;
+    }
+    .map-wrapper {
+      background: #12121a;
+      border: 1px solid #1e1e30;
+      border-radius: 12px;
+      padding: 16px;
+      overflow: auto;
+      cursor: grab;
+      position: relative;
+    }
+    .map-wrapper:active { cursor: grabbing; }
+    .map-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+    }
+    .controls {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      justify-content: center;
+    }
+    .controls button {
+      background: #1e1e30;
+      border: 1px solid #2a2a40;
+      color: #ccc;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .controls button:hover {
+      background: #2a2a40;
+      color: #fff;
+    }
+    footer {
+      width: 100%;
+      max-width: 1400px;
+      padding: 16px 32px 24px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #555;
+      border-top: 1px solid #1a1a2e;
+    }
+    footer a { color: #48c78e; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .zoom-level { color: #666; font-size: 13px; text-align: center; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Monetization System Map — Martell Group</h1>
+    <div class="meta">
+      <span class="dot"></span>
+      Live Data · Mar 19, 2026
+    </div>
+  </header>
+  
+  <div class="container">
+    <div class="map-wrapper" id="mapWrapper">
+      <img src="monetization-map.png" alt="Monetization System Map" id="mapImg" />
+    </div>
+    <div class="controls">
+      <button onclick="zoom(0.8)">− Zoom Out</button>
+      <button onclick="zoom(1)">Reset</button>
+      <button onclick="zoom(1.5)">+ Zoom In</button>
+      <button onclick="zoom(2)">2x</button>
+      <button onclick="window.open('monetization-map.png', '_blank')">↗ Full Size</button>
+    </div>
+    <div class="zoom-level" id="zoomLevel">100%</div>
+  </div>
+
+  <footer>
+    <span>Source: CEO Dashboard API (Stripe, MySQL, Greenhouse)</span>
+    <span><a href="https://www.notion.so/Monetization-System-Map-31ec61f3f77e81b1bc7acdee9b3a6042">View in Notion →</a></span>
+  </footer>
+
+  <script>
+    let currentZoom = 1;
+    const img = document.getElementById('mapImg');
+    const wrapper = document.getElementById('mapWrapper');
+    const level = document.getElementById('zoomLevel');
+    
+    function zoom(z) {
+      currentZoom = z;
+      img.style.width = (z * 100) + '%';
+      level.textContent = Math.round(z * 100) + '%';
+    }
+
+    // Scroll wheel zoom
+    wrapper.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const delta = e.deltaY > 0 ? -0.1 : 0.1;
+      currentZoom = Math.max(0.5, Math.min(3, currentZoom + delta));
+      img.style.width = (currentZoom * 100) + '%';
+      level.textContent = Math.round(currentZoom * 100) + '%';
+    });
+
+    // Drag to pan
+    let isDragging = false, startX, startY, scrollL, scrollT;
+    wrapper.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.pageX - wrapper.offsetLeft;
+      startY = e.pageY - wrapper.offsetTop;
+      scrollL = wrapper.scrollLeft;
+      scrollT = wrapper.scrollTop;
+    });
+    wrapper.addEventListener('mouseleave', () => isDragging = false);
+    wrapper.addEventListener('mouseup', () => isDragging = false);
+    wrapper.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      wrapper.scrollLeft = scrollL - (e.pageX - wrapper.offsetLeft - startX);
+      wrapper.scrollTop = scrollT - (e.pageY - wrapper.offsetTop - startY);
+    });
+  </script>
+</body>
+</html>
