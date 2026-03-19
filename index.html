@@ -202,6 +202,59 @@
     .ch-card .ch-months span { flex: 1; background: #0f0f14; padding: 6px 8px; border-radius: 4px; text-align: center; }
     .ch-card .ch-corr { font-size: 11px; color: #888; margin-top: 8px; }
     
+    /* Diagnostic Questions */
+    .diagnostics { margin: 40px 0; }
+    .diagnostics > h2 { font-size: 18px; margin-bottom: 6px; }
+    .diagnostics > p { font-size: 13px; color: #888; margin-bottom: 16px; }
+    .diag-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 12px;
+    }
+    .diag-card {
+      background: #12121a;
+      border: 1px solid #2a2a40;
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .diag-card h4 {
+      font-size: 14px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .diag-card .diag-sub { font-size: 12px; color: #888; font-style: italic; margin-bottom: 10px; }
+    .diag-card ol {
+      list-style: none;
+      counter-reset: q;
+      padding: 0;
+    }
+    .diag-card ol li {
+      counter-increment: q;
+      font-size: 12px;
+      color: #bbb;
+      padding: 6px 0 6px 24px;
+      position: relative;
+      border-bottom: 1px solid #1a1a2e;
+    }
+    .diag-card ol li:last-child { border-bottom: none; }
+    .diag-card ol li::before {
+      content: counter(q);
+      position: absolute;
+      left: 0;
+      width: 18px;
+      height: 18px;
+      background: #1a1a2e;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: #888;
+      top: 7px;
+    }
+    
     /* Problems */
     .problems { margin: 40px 0; }
     .problems > h2 { font-size: 18px; margin-bottom: 16px; color: #eb3b5a; }
@@ -593,6 +646,73 @@
           </div>
           <div class="ch-corr">+22K followers Q1 · 30+ leads/week from handraisers</div>
         </div>
+      </div>
+      
+    </div>
+  </section>
+  
+  <!-- DIAGNOSTIC QUESTIONS -->
+  <section class="diagnostics">
+    <h2>🔍 Questions to Ask the Team</h2>
+    <p>These are the input-level questions that reveal whether execution is improving or we're doing the same thing expecting different results.</p>
+    <div class="diag-grid">
+      
+      <div class="diag-card">
+        <h4><span style="color:#48c78e;">●</span> Content → Capture</h4>
+        <div class="diag-sub">"Are we getting people OFF platforms and INTO our funnel?"</div>
+        <ol>
+          <li>What is the CTA on every piece of content published this quarter? Is it consistent or random?</li>
+          <li>Where does YouTube specifically send people — email list, DM keyword, or just "subscribe"?</li>
+          <li>What % of content has a direct handraiser CTA (COACH/ELITE) vs lead magnet (BONUS/SWITCH) vs no CTA?</li>
+          <li>IG Stories handraisers run Sun/Wed — what's the actual conversion rate? Are we running them consistently?</li>
+          <li>LinkedIn generates 30+ leads/week — through what mechanism? Manual DM or content CTAs?</li>
+        </ol>
+      </div>
+      
+      <div class="diag-card">
+        <h4><span style="color:#f7b731;">●</span> Capture → Qualify</h4>
+        <div class="diag-sub">"Once someone raises their hand, what actually happens?"</div>
+        <ol>
+          <li>What are our email open rates and click rates on nurture sequences? Trending up or down?</li>
+          <li>What's the DM-to-booked-call conversion rate? How many of 30,761 chats became calls?</li>
+          <li>How many leads fall out between "keyword DM" and "SDR pickup"? What's the drop-off?</li>
+          <li>SMS delivery/response rates — are messages even landing? (SMS/Web collapsed 81%)</li>
+          <li>How many leads sit in nurture longer than 21 days with no outcome?</li>
+        </ol>
+      </div>
+      
+      <div class="diag-card">
+        <h4><span style="color:#eb3b5a;">●</span> Qualify → Close</h4>
+        <div class="diag-sub">"Are we sending closers good leads or garbage?"</div>
+        <ol>
+          <li>What % of SDR-qualified leads are actually $100K+ businesses? Are setters enforcing the bar?</li>
+          <li>What does Adam do differently to hit 1.32% while others are at 0.18-0.30%? Has anyone shadowed him?</li>
+          <li>Are closers getting equal quality leads or is distribution uneven?</li>
+          <li>What's the no-show rate on booked calls? Is that changing?</li>
+          <li>How many touches to close? Is that number going up (harder sells)?</li>
+        </ol>
+      </div>
+      
+      <div class="diag-card">
+        <h4><span style="color:#eb3b5a;">●</span> Close: Pricing & Mix</h4>
+        <div class="diag-sub">"Are we discounting or is the mix shifting?"</div>
+        <ol>
+          <li>What's the product mix by month? More Dan AI ($3K) vs Elite ($9K) — is that why deal size is dropping?</li>
+          <li>Are closers offering discounts to hit targets? Any unauthorized pricing?</li>
+          <li>What's the close rate by product? Maybe Dan AI closes well but Elite doesn't.</li>
+        </ol>
+      </div>
+      
+      <div class="diag-card" style="grid-column: 1 / -1;">
+        <h4><span style="color:#f7b731;">●</span> The Execution Question</h4>
+        <div class="diag-sub">"Is the machine doing more, or just the same?"</div>
+        <ol style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0 24px;">
+          <li>How many pieces of content published per week — Jan vs Feb vs Mar? (volume)</li>
+          <li>How many CTAs activated per week? (conversion intent)</li>
+          <li>How many DMs sent by automation per week? (capture volume)</li>
+          <li>How many calls booked per week? (pipeline generation)</li>
+          <li>How many calls completed per week? (pipeline execution)</li>
+        </ol>
       </div>
       
     </div>
